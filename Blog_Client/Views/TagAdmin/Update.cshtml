@@ -1,0 +1,60 @@
+﻿@model TagUpdateDTO
+
+@{
+    ViewData["Title"] = "Update Tag";
+    var blogs = ViewBag.Blogs as List<Blog_Client.Models.Blog>;
+    var selectedBlogIds = Model.BlogIDs?.ToList() ?? new List<int>();
+}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../assets/img/home-bg.jpg'); padding-bottom: 1rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<h2>Update Tag</h2>
+
+<form asp-action="Update" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Tag Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Blogs</label>
+        <div>
+            @if (blogs != null)
+            {
+                foreach (var blog in blogs)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="BlogIDs"
+                               value="@blog.id"
+                               id="blog_@blog.id"
+                               @(selectedBlogIds.Contains(blog.id) ? "checked" : "") />
+                        <label class="form-check-label" for="blog_@blog.id">@blog.title</label>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

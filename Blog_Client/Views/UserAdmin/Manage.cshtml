@@ -1,0 +1,46 @@
+﻿@model UserWithRolesDTO
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../assests/img/home-bg.jpg'); padding-bottom: 1rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<h2>Manage User Roles</h2>
+
+<div>
+    <h4>User: @Model.username (@Model.name)</h4>
+    <form asp-action="Manage" method="post">
+        <input type="hidden" asp-for="id" value="@Model.id" />
+        <input type="hidden" asp-for="username" value="@Model.username" />
+        <input type="hidden" asp-for="name" value="@Model.name" />
+        <div class="form-group">
+            <label>Roles:</label>
+            <div>
+                @{
+                    var fixedRoles = new List<string> { "admin", "contributor", "reader" };
+                }
+                @foreach (var role in fixedRoles)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="Roles"
+                               value="@role"
+                               id="role_@role"
+                               @(Model.Roles != null && Model.Roles.Contains(role) ? "checked" : "") />
+                        <label class="form-check-label" for="role_@role">@role</label>
+                    </div>
+                }
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

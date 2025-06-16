@@ -1,0 +1,58 @@
+﻿@model List<UserWithRolesDTO>
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assests/img/home-bg.jpg'); padding-bottom: 1rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Blog Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Full Name</th>
+                        <th>Roles</th>
+                        <th>Manage</th>
+                        <th>User Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.username</td>
+                            <td>@item.name</td>
+                            <td>
+                                @if (item.Roles != null && item.Roles.Any())
+                                {
+                                    @string.Join(", ", item.Roles)
+                                }
+                                else
+                                {
+                                    <span>No roles</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Manage" asp-route-id="@item.id" class="btn btn-sm btn-primary">Manage</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.id" class="btn btn-sm btn-secondary">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

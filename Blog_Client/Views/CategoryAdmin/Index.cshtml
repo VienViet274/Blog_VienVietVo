@@ -1,0 +1,48 @@
+﻿@model List<Category>
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assests/img/home-bg.jpg'); padding-bottom: 1rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <a asp-action="Create" class="btn btn-outline-success">Create</a>
+            <!-- Blog Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.name</td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.id" class="btn btn-sm btn-primary">Update</a>
+                            </td>
+                            <td>
+                                <form asp-action="Delete" asp-route-id="@item.id" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

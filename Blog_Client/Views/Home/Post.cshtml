@@ -1,0 +1,130 @@
+﻿@model Blog
+
+
+<!-- Page Header-->
+@if (Model.imagePath == "")
+{
+<header class="masthead" style="background-image:  url('../../assests/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>@Model.title</h1>
+                    <h2 class="subheading">@Model.summary</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="#!">Start Bootstrap</a>
+                        on August 24, 2023
+                    </span>
+                    <div>
+                        <strong>Category:</strong>
+                        @Model.category?.name
+                    </div>
+                    <div>
+                        <strong>Tags:</strong>
+                        @if (Model.tags != null && Model.tags.Any())
+                        {
+                            foreach (var tag in Model.tags)
+                            {
+                                <span class="badge bg-secondary me-1">@tag.name</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>No tags</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+}
+else
+{
+    <header class="masthead" style="background-image:  url('../../@Model.imagePath')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h1>@Model.title</h1>
+                        <h2 class="subheading">@Model.summary</h2>
+                        <span class="meta">
+                            Posted by
+                            <a href="#!">Start Bootstrap</a>
+                            on August 24, 2023
+                        </span>
+                        <div>
+                            <strong>Category:</strong>
+                            @Model.category?.name
+                        </div>
+                        <div>
+                            <strong>Tags:</strong>
+                            @if (Model.tags != null && Model.tags.Any())
+                            {
+                                foreach (var tag in Model.tags)
+                                {
+                                    <span class="badge bg-secondary me-1">@tag.name</span>
+                                }
+                            }
+                            else
+                            {
+                                <span>No tags</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    }
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @Model.content
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Comments Section -->
+<section class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <h3>Comments</h3>
+                @if (Model.comments != null && Model.comments.Any())
+                {
+                    <ul class="list-group">
+                        @foreach (var comment in Model.comments)
+                        {
+                            <li class="list-group-item">
+                                <strong>@comment.ApplicationUser?.UserName</strong>:
+                                @comment.Message
+                                <br />
+                                <small class="text-muted">@comment.CreatedAt?.ToString("g")</small>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No comments yet.</p>
+                }
+                <form method="post"  asp-action="AddComment" asp-route-id="@Model.id">
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Leave a Comment:</label>
+                        <textarea class="form-control" id="message" name="Message" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <a asp-action="Index" class="btn btn-outline-secondary mt-4">
+                    <i class="bi bi-house-door"></i> Back to Home Page
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+   

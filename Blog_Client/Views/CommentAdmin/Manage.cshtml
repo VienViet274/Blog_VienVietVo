@@ -1,0 +1,97 @@
+﻿@model Blog
+
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../assests/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>@Model.title</h1>
+                    <h2 class="subheading">@Model.summary</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="#!">Start Bootstrap</a>
+                        on August 24, 2023
+                    </span>
+                    <div>
+                        <strong>Category:</strong>
+                        @Model.category?.name
+                    </div>
+                    <div>
+                        <strong>Tags:</strong>
+                        @if (Model.tags != null && Model.tags.Any())
+                        {
+                            foreach (var tag in Model.tags)
+                            {
+                                <span class="badge bg-secondary me-1">@tag.name</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>No tags</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @Model.content
+                <p>
+                    Placeholder text by
+                    <a href="http://spaceipsum.com/">Space Ipsum</a>
+                    &middot; Images by
+                    <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Comments Section -->
+<section class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <h3>Comments</h3>
+                @if (Model.comments != null && Model.comments.Any())
+                {
+                    <ul class="list-group">
+                        @foreach (var comment in Model.comments)
+                        {
+                            <li class="list-group-item">
+                                <strong>@comment.ApplicationUser?.UserName</strong>:
+                                @comment.Message
+                                <br />
+                                <small class="text-muted">@comment.CreatedAt?.ToString("g")</small>
+                                <div class="mt-2">
+                                    <form asp-action="DeleteComment"  method="post" style="display:inline;">
+                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                    @if (!comment.Approved)
+                                    {
+                                        <form asp-action="Approve" method="post" style="display:inline;">
+                                            <input type="hidden" name="commentId" value="@comment.Id" />
+                                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                        </form>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No comments yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>

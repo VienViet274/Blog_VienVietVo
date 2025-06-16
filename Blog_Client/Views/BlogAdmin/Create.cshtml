@@ -1,0 +1,94 @@
+﻿@model BlogCreateDTO
+
+@{
+    ViewData["Title"] = "Create Blog";
+    var categories = ViewBag.Categories as List<Category>;
+    var allTags = ViewBag.AllTags as List<Tag>;
+    var selectedTagIds = Model.TagIDs ?? new List<int>();
+}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../assests/img/home-bg.jpg'); padding-bottom: 1rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<h2>Create Blog</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Summary" class="form-label">Summary</label>
+        <input asp-for="Summary" class="form-control" />
+        <span asp-validation-for="Summary" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label">Content</label>
+        <textarea asp-for="Content" class="form-control" rows="6"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Category</label>
+        <select asp-for="CategoryId" class="form-select">
+            <option value="">-- Select Category --</option>
+            @if (categories != null)
+            {
+                foreach (var cat in categories)
+                {
+                    <option value="@cat.id">@cat.name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Tags</label>
+        <div>
+            @if (allTags != null)
+            {
+                foreach (var tag in allTags)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="TagIDs"
+                               value="@tag.id"
+                               id="tag_@tag.id"
+                               @(selectedTagIds.Contains(tag.id) ? "checked" : "") />
+                        <label class="form-check-label" for="tag_@tag.id">@tag.name</label>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImagePath" class="form-label">Image</label>
+        <input type="file" name="file" class="form-control" />
+        <span asp-validation-for="ImagePath" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <p class="alert-danger">@ViewBag.Message</p>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

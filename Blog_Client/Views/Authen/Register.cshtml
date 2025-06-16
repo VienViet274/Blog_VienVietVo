@@ -1,0 +1,63 @@
+﻿
+@model RegisterDTO
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../assests/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>Register</h1>
+                    <h2 class="subheading">Register</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="#!">Start Bootstrap</a>
+                        on August 24, 2023
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<form  method="post">
+    <div>
+        <label for="UserName">Tên đăng nhập:</label>
+        <input type="text" id="UserName" name="UserName" class="form-control" required  />
+    </div>
+
+    <div>
+        <label for="Password">Mật khẩu:</label>
+        <input type="password" id="Password" name="Password" class="form-control" required  />
+    </div>
+
+    <div>
+        <label for="Name">Họ và tên:</label>
+        <input type="text" id="Name" name="Name" class="form-control"  required />
+    </div>
+
+    <div>
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="Email" class="form-control" required />
+    </div>
+
+    <div>
+        <label for="Phone">Số điện thoại:</label>
+        <input type="tel" id="Phone" name="Phone" class="form-control" required />
+    </div>
+
+    <div>
+        <label for="DateOfBirth">Ngày sinh:</label>
+        <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control"  required />
+    </div>
+
+    <div>
+        <label for="RoleID">Vai trò:</label>
+        <select id="RoleID" name="RoleID" class="form-control" required>
+            <option value="reader">reader</option>
+            <option value="contributor">contributor</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đăng ký</button>
+    <p class="alert-danger" > @ViewBag.message</p>
+</form>
+

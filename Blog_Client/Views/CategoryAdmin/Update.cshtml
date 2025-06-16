@@ -1,0 +1,31 @@
+﻿@model CategoryUpdateDTO
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../../assests/img/home-bg.jpg'); padding-bottom: 1rem;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<h2>Create Blog</h2>
+
+<form asp-action="Update" method="post" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <input asp-for="Id" hidden />
+        <label asp-for="Name" class="form-label">Title</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    @if (ViewBag.Message != null)
+    {
+        <p class="alert alert-danger">@ViewBag.Message</p>
+    }
+</form>
